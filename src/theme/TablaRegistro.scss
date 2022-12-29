@@ -1,0 +1,51 @@
+
+
+.container{
+}
+
+
+.table{
+    height: auto;
+    padding-bottom: 30px;
+    padding-right: 50px;
+}
+
+.tableHeader{
+    display: inline-flex;
+
+}
+
+.tableHeader-title{
+    padding: 10px;
+    color: black;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.table-body{
+    width: 100vw;
+    &-container{
+        display: inline-flex;
+        // border: 1px solid black;
+        text-align: center;
+        width: 100%;
+
+        &-titleid{
+            padding-left: 3px;
+            padding-right: 10px;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+        &-titlecity{
+            padding-left: 3px;
+            padding-right: 10px;
+            border: 1px solid black;
+        }
+    }
+}
+
+
+.a:-webkit-any-link {
+    text-decoration: auto !important;
+    color: black !important;
+}
