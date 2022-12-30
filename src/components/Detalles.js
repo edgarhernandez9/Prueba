@@ -17,12 +17,12 @@ export const Detalles = () => {
     }, [])
     
     return (
-        <div>
+        <pre>
             {
                 filterData.length > 0 ?
-                JSON.stringify(filterData)
+                JSON.stringify(filterData, null, 2)
                 : ''
             }
-        </div>
+        </pre>
     )
 }
