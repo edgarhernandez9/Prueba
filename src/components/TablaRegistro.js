@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-// import { useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getDataCondicionAtmosferica } from '../store/reducer';
 import '../theme/TablaRegistro.scss';
+import { formatearFecha } from '../recursos/formatearFecha';
 
 export const TablaRegistro = () => {
 
     const stateDatos = useSelector(state => state);
+    const navigate = useNavigate()
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -16,9 +17,10 @@ export const TablaRegistro = () => {
 
 
 
-    const actionBtn = () => {
-        // const navigate = useNavigation();
-        // navigate('/detalles')
+    const actionBtn = (id) => {
+        // const navigate = useNavigate()
+        
+        navigate(`/detalles/${id}`);
     }
 
 
@@ -60,11 +62,7 @@ export const TablaRegistro = () => {
                             stateDatos.datos.datos.results.map((data) => (
                                 <div key={data._id} className="table-body-container">
                                     <div className='table-body-container-titleid' style={{ width: '218px'}}>
-                                        <Link to='/detalles' style={{
-                                            textDecoration: 'auto',
-                                            color: 'black'
-                                        }}><p>{data._id}</p></Link>
-                                        
+                                        <p onClick={() => actionBtn(data._id)}>{data._id}</p>
                                     </div>
                                     <div className='table-body-container-titlecity' style={{ width: '76px'}}>
                                         <p>{data.cityid}</p>
@@ -82,7 +80,7 @@ export const TablaRegistro = () => {
                                         <p>{data.relativehumidity}</p>
                                     </div>
                                     <div className='table-body-container-titlecity' style={{ width: '143px'}}>
-                                        <p>{}</p>
+                                        <p>{formatearFecha(data['date-insert'])}</p>
                                     </div>
                                     <div className='table-body-container-titlecity' style={{ width: '143px'}}>
                                         <p></p>

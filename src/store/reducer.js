@@ -17,9 +17,6 @@ export const crearDatos = createSlice(({
         isLoading: true,
     },
     reducers: {
-        consultaId: (state, action) => {
-            console.log(actions)
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(getDataCondicionAtmosferica.fulfilled, (state, action) => {

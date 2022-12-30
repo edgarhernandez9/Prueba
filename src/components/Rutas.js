@@ -11,7 +11,7 @@ export const Rutas = () => {
             <Router>
                 <Routes>
                     <Route path='/' element={ <TablaRegistro />} />
-                    <Route path='/detalles' element={<Detalles />} />
+                    <Route path='/detalles/:id' element={<Detalles />} />
                 </Routes>
             </Router>
         </>
