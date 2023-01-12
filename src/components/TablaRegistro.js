@@ -4,72 +4,66 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getDataCondicionAtmosferica } from '../store/reducer';
 import { formatearFecha } from '../recursos/formatearFecha';
 import '../theme/TablaRegistro.scss';
+import { useTableRegistro } from '../hooks/useTableRegistro';
 
 
 export const TablaRegistro = () => {
 
-    const stateDatos = useSelector(state => state);
-    const navigate = useNavigate()
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getDataCondicionAtmosferica())
-    }, [])
-
-
-
-    const actionBtn = (id) => {
-        // const navigate = useNavigate()
-        
-        navigate(`/detalles/${id}`);
-    }
-
+    const { actionBtn, data = [], handleClick, isLoading, currentPage, totalPage } = useTableRegistro();
 
     return (
         <div className='container'>
 
             {
-                stateDatos.datos.isLoading ? <div>cargando....</div> : 
-                <table>
-                    <thead>
-                        <tr>
-                            <th className='table'>_id</th>
-                            <th className='table'>cityid</th>
-                            <th className='table'>name</th>
-                            <th className='table'>state</th>
-                            <th className='table'>probabilityofprecip</th>
-                            <th className='table'>relativehumidity</th>
-                            <th className='table'>Lastreporttime formato (YYYY/MM/DD)</th>
-                            <th className='table'>LLUEVE Si se cumple = probabilityofprecip >60 || relativehumidity >50</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            stateDatos.datos.datos.results.map((data) => (
-                                <tr key={data._id}>
-                                    <td className='table' 
-                                        onClick={() => actionBtn(data._id)}
-                                        style={{
-                                            cursor: "pointer"
-                                        }}
-                                    >{data._id}</td>
-                                    <td className='table'>{data.cityid}</td>
-                                    <td className='table'>{data.name}</td>
-                                    <td className='table'>{data.state}</td>
-                                    <td className='table'>{data.probabilityofprecip}</td>
-                                    <td className='table'>{data.relativehumidity}</td>
-                                    <td className='table'>{formatearFecha(data['date-insert'])}</td>
-                                    <td className='table'></td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                    <tfoot>
-                        <div>
-                            <p>Total de registros = {stateDatos.datos.datos.results.length} </p>
+                isLoading ? <div>cargando....</div> : 
+                <>
+                    <table data-testid='table'>
+                        <thead>
+                            <tr>
+                                <th className='table'>_id</th>
+                                <th className='table'>cityid</th>
+                                <th className='table'>name</th>
+                                <th className='table'>state</th>
+                                <th className='table'>probabilityofprecip</th>
+                                <th className='table'>relativehumidity</th>
+                                <th className='table'>Lastreporttime formato (YYYY/MM/DD)</th>
+                                <th className='table'>{'LLUEVE Si se cumple = probabilityofprecip >60 || relativehumidity >50'}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                data.map((data) => (
+                                    <tr key={data._id}>
+                                        <td className='table' 
+                                            onClick={() => actionBtn(data._id)}
+                                            style={{
+                                                cursor: "pointer"
+                                            }}
+                                        >{data._id}</td>
+                                        <td className='table'>{data.cityid}</td>
+                                        <td className='table'>{data.name}</td>
+                                        <td className='table'>{data.state}</td>
+                                        <td className='table'>{data.probabilityofprecip}</td>
+                                        <td className='table'>{data.relativehumidity}</td>
+                                        <td className='table'>{formatearFecha(data['date-insert'])}</td>
+                                        <td className='table'></td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                    <div className='footer'>
+                        <div className='btn-footer'>
+                            <button className='btn-footer-prev' onClick={() => handleClick(currentPage - 1)}>Anterior</button>
+                            <button className='btn-footer-next' onClick={() => handleClick(currentPage + 1)}>Siguiente</button>
+                            <span className='btn-footer-page'>Pagina {currentPage} de { totalPage }</span>
                         </div>
-                    </tfoot>
-                </table>
+                        <div>
+                            <p>Total de registros = {data.length} </p>
+                        </div>
+                    </div>
+                </>
+                
             }
             
         </div>
